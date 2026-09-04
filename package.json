@@ -1,0 +1,39 @@
+{
+  "name": "hak-scheduled-settlement",
+  "version": "0.1.0",
+  "description": "Conditional settlement for Hedera Agent Kit agents with no smart contract and no keeper. A payout is a pre-signed Scheduled Transaction whose trigger condition is signature collection: when a k-of-n quorum of attesting agents signs, the network executes it itself.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "hedera",
+    "hedera-agent-kit",
+    "hak-plugin",
+    "scheduled-transaction",
+    "conditional-settlement",
+    "threshold-key",
+    "oracle-quorum",
+    "escrow",
+    "ai-agent",
+    "multi-agent"
+  ],
+  "peerDependencies": {
+    "@hashgraph/sdk": ">=2.60.0",
+    "hedera-agent-kit": ">=3.0.0",
+    "zod": "^3.25.76"
+  },
+  "license": "MIT",
+  "author": "jmgomezl",
+  "devDependencies": {
+    "@hashgraph/sdk": "^2.62.0",
+    "zod": "^3.25.76"
+  }
+}
