@@ -1,39 +1,68 @@
 {
   "name": "hak-scheduled-settlement",
   "version": "0.1.0",
-  "description": "Conditional settlement for Hedera Agent Kit agents with no smart contract and no keeper. A payout is a pre-signed Scheduled Transaction whose trigger condition is signature collection: when a k-of-n quorum of attesting agents signs, the network executes it itself.",
+  "description": "Hedera Agent Kit plugin for conditional settlement: pre-signed Scheduled Transactions released by a k-of-n attester quorum, with no smart contract and no keeper",
   "type": "module",
-  "main": "src/index.js",
-  "exports": {
-    ".": "./src/index.js"
+  "license": "MIT",
+  "author": "Juanma Gomez",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmgomezl/hak-scheduled-settlement.git"
   },
-  "files": [
-    "src",
-    "examples",
-    "README.md",
-    "LICENSE"
-  ],
+  "homepage": "https://github.com/jmgomezl/hak-scheduled-settlement#readme",
+  "bugs": {
+    "url": "https://github.com/jmgomezl/hak-scheduled-settlement/issues"
+  },
   "keywords": [
     "hedera",
-    "hedera-agent-kit",
-    "hak-plugin",
+    "agent-kit",
+    "plugin",
     "scheduled-transaction",
     "conditional-settlement",
     "threshold-key",
-    "oracle-quorum",
+    "multisig",
     "escrow",
-    "ai-agent",
-    "multi-agent"
+    "oracle-quorum"
   ],
-  "peerDependencies": {
-    "@hashgraph/sdk": ">=2.60.0",
-    "hedera-agent-kit": ">=3.0.0",
-    "zod": "^3.25.76"
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "README.md", "LICENSE"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
   },
-  "license": "MIT",
-  "author": "jmgomezl",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "biome check .",
+    "format": "biome format . --write",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:integration": "node scripts/integration-test.mjs",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@hashgraph/hedera-agent-kit": "^4.0.0",
+    "@hiero-ledger/sdk": "^2.84.0"
+  },
+  "dependencies": {
+    "zod": "^3.22.0"
+  },
   "devDependencies": {
-    "@hashgraph/sdk": "^2.62.0",
-    "zod": "^3.25.76"
+    "@hashgraph/hedera-agent-kit": "^4.0.0",
+    "@hiero-ledger/sdk": "^2.84.0",
+    "@biomejs/biome": "^1.9.0",
+    "@types/node": "^20.11.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
