@@ -15,7 +15,8 @@ A payout does not have to be a contract call waiting to be triggered. It can be 
 Scheduled Transaction that already exists on the ledger, already carries the
 committer's signature, and is missing only the attesters'. **Its trigger
 condition is signature collection** — when the k-of-n quorum completes, the
-network executes it. Nothing polls, nothing wakes up, nobody is paid to watch.
+network executes it. No separate payout executor is needed. Attesters still need to check the condition
+and submit their signatures; this plugin does not provide event monitoring.
 
 The safety property lives in the key shape:
 
@@ -101,6 +102,12 @@ On the k-th signature the network executes the transfer.
 
 ## Constraints worth knowing
 
+The key restriction assumes distinct committer and attester keys. Independent
+keys alone do not establish independent operators. The committer together with
+the quorum can authorize other transfers; the demonstrated restriction concerns
+the attesters acting without the committer.
+
+
 - **62 days maximum.** Hedera caps a scheduled transaction's lifetime at
   5,356,800 seconds. Longer obligations must be re-issued, which reintroduces
   something that has to wake up — scope the term instead.
@@ -116,7 +123,8 @@ On the k-th signature the network executes the transfer.
 
 Parametric payouts, milestone escrow, bounty release, DAO disbursement — anything
 shaped like *"release these funds iff k independent parties agree the condition
-holds"*, where you would rather not deploy a contract or run a cron job.
+holds"*, where a fixed precommitted transfer is sufficient. Event detection and timely
+attestation remain the caller’s responsibility.
 
 Built during ETHOnline 2026 and first consumed by
 [aivy-parametric-pool](https://github.com/jmgomezl/aivy-parametric-pool), which
